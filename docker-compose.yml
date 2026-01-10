@@ -1,20 +1,26 @@
 services:
   postgres:
-    image: postgres:15
+    image: postgres:17.6
     container_name: social-scheduler-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: social_scheduler
     ports:
-      - "5432:5432"
+      - "5442:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - db-data-social:/var/lib/postgresql/data
+    networks:
+      - db
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
 
+networks:
+  db:
+    driver: bridge
+
 volumes:
-  postgres_data:
+  db-data-social:
