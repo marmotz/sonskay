@@ -6,7 +6,6 @@
     "postinstall": "pnpm run db:generate",
     "dev": "next dev",
     "build": "next build",
-    "start": "pnpm run db:migrate next start",
     "lint": "eslint",
     "db:generate": "prisma generate",
     "db:migration:generate": "prisma migrate dev --create-only",
