@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Social Scheduler',
+  title: 'Sonskay',
   description: 'Schedule your social media posts with ease',
 };
 

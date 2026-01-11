@@ -1,6 +1,6 @@
-# Social Scheduler
+# Sonskay
 
-A social media scheduling application built with Next.js 15, Prisma, and shadcn/ui.
+A social media scheduling application built with Next.js 16, Prisma, and shadcn/ui.
 
 ## Tech Stack
 
@@ -41,7 +41,7 @@ pnpm dev
 ### Environment Variables
 
 ```env
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/social_scheduler?schema=public"
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/postgres?schema=public"
 JWT_SECRET="your-super-secret-jwt-key-change-in-production"
 ```
 

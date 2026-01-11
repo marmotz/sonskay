@@ -1,15 +1,15 @@
 services:
   postgres:
     image: postgres:17.6
-    container_name: social-scheduler-postgres
+    container_name: sonskay-postgres
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: social_scheduler
+      POSTGRES_DB: postgres
     ports:
       - "5442:5432"
     volumes:
-      - db-data-social:/var/lib/postgresql/data
+      - db-data-sonskay:/var/lib/postgresql/data
     networks:
       - db
     healthcheck:
@@ -23,4 +23,4 @@ networks:
     driver: bridge
 
 volumes:
-  db-data-social:
+  db-data-sonskay:
