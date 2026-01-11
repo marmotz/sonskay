@@ -1,5 +1,6 @@
 'use client';
 
+import { signOut } from '@/lib/auth-client';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
@@ -16,8 +17,13 @@ import { useRouter } from 'next/navigation';
 
 interface NavbarProps {
   user: {
-    name?: string | null;
+    id: string;
+    name: string;
     email: string;
+    emailVerified: boolean;
+    image?: string | null;
+    createdAt: Date;
+    updatedAt: Date;
   } | null;
 }
 
@@ -26,11 +32,13 @@ export function Navbar({ user }: NavbarProps) {
 
   const handleLogout = async () => {
     try {
-      await fetch('/api/auth/logout', {
-        method: 'POST',
+      await signOut({
+        fetchOptions: {
+          onSuccess: () => {
+            router.push('/login');
+          },
+        },
       });
-      router.push('/login');
-      router.refresh();
     } catch (error) {
       console.error('Logout failed:', error);
     }

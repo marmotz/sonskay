@@ -1,24 +1,25 @@
+import { auth } from '@/lib/auth';
 import { initTRPC, TRPCError } from '@trpc/server';
-import { getSessionFromHeaders } from '../lib/auth';
+import { prisma } from '../lib/prisma';
 
 import { type NextRequest } from 'next/server';
 import superjson from 'superjson';
 import { ZodError } from 'zod';
-import { prisma } from '../lib/prisma';
 
 //context : will be passed to all tRPC procedures
 export const createTRPCContext = async (opts: { req: NextRequest }) => {
-  //try to get session from headers
-  const session = await getSessionFromHeaders(opts.req.headers);
+  //try to get session from better-auth (uses cookies)
+  const session = await auth.api.getSession({
+    headers: opts.req.headers,
+  });
 
   return {
     prisma,
     session,
-    userId: session?.id,
+    userId: session?.user.id,
     headers: opts.req.headers,
   };
 };
-
 export type CreateContextType = Awaited<ReturnType<typeof createTRPCContext>>;
 
 //tRPC initialization

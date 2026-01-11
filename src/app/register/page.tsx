@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signUp } from '@/lib/auth-client';
 import { registerSchema, type RegisterInput } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -13,9 +14,9 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function RegisterPage() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const {
     register,
@@ -30,20 +31,20 @@ export default function RegisterPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/auth/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+      const result = await signUp.email({
+        name: data.name,
+        email: data.email,
+        password: data.password,
+        image: '',
+        callbackURL: '/dashboard',
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        setError(result.error || 'Registration failed');
+      if (result.error) {
+        setError(result.error.message || 'Registration failed');
         return;
       }
 
-      router.push('/login');
+      router.push('/dashboard');
     } catch {
       setError('An unexpected error occurred');
     } finally {
@@ -61,7 +62,10 @@ export default function RegisterPage() {
           <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
           <CardDescription>Enter your details to get started</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-8"
+        >
           <CardContent className="space-y-4">
             {error && <div className="bg-destructive/10 text-destructive rounded-md p-3 text-sm">{error}</div>}
             <div className="space-y-2">

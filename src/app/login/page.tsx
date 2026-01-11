@@ -5,15 +5,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { signIn } from '@/lib/auth-client';
 import { loginSchema, type LoginInput } from '@/lib/validations/auth';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 export default function LoginPage() {
-  const router = useRouter();
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -30,20 +29,17 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+      const result = await signIn.email({
+        email: data.email,
+        password: data.password,
+        rememberMe: true,
+        callbackURL: '/dashboard',
       });
 
-      const result = await response.json();
-
-      if (!response.ok) {
-        setError(result.error || 'Login failed');
+      if (result.error) {
+        setError(result.error.message || 'Login failed');
         return;
       }
-
-      router.push('/dashboard');
     } catch {
       setError('An unexpected error occurred');
     } finally {
@@ -61,7 +57,10 @@ export default function LoginPage() {
           <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
           <CardDescription>Enter your credentials to access your account</CardDescription>
         </CardHeader>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-8"
+        >
           <CardContent className="space-y-4">
             {error && <div className="bg-destructive/10 text-destructive rounded-md p-3 text-sm">{error}</div>}
             <div className="space-y-2">
