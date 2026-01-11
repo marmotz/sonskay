@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { auth } from '../src/lib/auth';
-import { prisma } from '../src/lib/prisma';
+import { auth } from '@/lib/auth';
+import { prisma } from '@/lib/prisma';
 
 async function main() {
   const password = '123456789';
