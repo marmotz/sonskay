@@ -9,7 +9,7 @@ import { changePassword, useSession } from '@/lib/auth-client';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-export default function ProfilePage() {
+export default function AccountPage() {
   const { data: session, isPending } = useSession();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -86,7 +86,7 @@ export default function ProfilePage() {
       <main className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-4xl space-y-8">
           <div>
-            <h1 className="text-3xl font-bold">Profile</h1>
+            <h1 className="text-3xl font-bold">Account</h1>
             <p className="text-muted-foreground">Manage your account settings</p>
           </div>
 

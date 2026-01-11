@@ -112,9 +112,9 @@ export function Navbar({ user }: NavbarProps) {
                 </div>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link href="/dashboard/profile">
+                  <Link href="/dashboard/account">
                     <User className="mr-2 h-4 w-4" />
-                    Profile
+                    Account
                   </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
