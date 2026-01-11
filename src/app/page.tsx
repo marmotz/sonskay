@@ -7,7 +7,7 @@ export default function Home() {
     <div className="bg-muted/50 flex min-h-screen items-center justify-center px-4">
       <Card className="w-full max-w-md text-center">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-3xl font-bold">Social Scheduler</CardTitle>
+          <CardTitle className="text-3xl font-bold">Sonskay</CardTitle>
           <CardDescription>Schedule your social media posts with ease</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-4">

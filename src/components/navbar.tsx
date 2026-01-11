@@ -53,7 +53,7 @@ export function Navbar({ user }: NavbarProps) {
             href="/dashboard"
             className="text-lg font-semibold"
           >
-            Social Scheduler
+            Sonskay
           </Link>
           <nav className="hidden items-center gap-4 md:flex">
             <Link
