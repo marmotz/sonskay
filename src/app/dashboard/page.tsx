@@ -1,4 +1,5 @@
 import { Navbar } from '@/components/navbar';
+import { TRPCTestCard } from '@/components/trpc-test';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { getSession } from '@/lib/auth';
 import { redirect } from 'next/navigation';
@@ -30,6 +31,7 @@ export default async function DashboardPage() {
               </p>
             </CardContent>
           </Card>
+          <TRPCTestCard />
         </div>
       </main>
     </div>

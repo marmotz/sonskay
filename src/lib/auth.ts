@@ -40,7 +40,8 @@ export async function getSession() {
   if (!payload) return null;
 
   return await prisma.user.findUnique({
-    where: { id: payload.userId }, select: { id: true, email: true, name: true },
+    where: { id: payload.userId },
+    select: { id: true, email: true, name: true },
   });
 }
 
@@ -58,4 +59,23 @@ export async function setAuthCookie(token: string) {
 export async function removeAuthCookie() {
   const cookieStore = await cookies();
   cookieStore.delete('auth-token');
+}
+
+//extract session from request headers (for tRPC context)
+export async function getSessionFromHeaders(headers: Headers) {
+  const cookieHeader = headers.get('cookie');
+  if (!cookieHeader) return null;
+
+  const tokenMatch = cookieHeader.match(/auth-token=([^;]+)/);
+  const token = tokenMatch?.[1];
+
+  if (!token) return null;
+
+  const payload = await verifyToken(token);
+  if (!payload) return null;
+
+  return await prisma.user.findUnique({
+    where: { id: payload.userId },
+    select: { id: true, email: true, name: true },
+  });
 }
